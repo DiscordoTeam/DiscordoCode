@@ -10,7 +10,6 @@
 #include <fstream>
 #include <thread>
 
-#include "../RSA.h"
 #include "Message.h"
 
 class ServerHandler

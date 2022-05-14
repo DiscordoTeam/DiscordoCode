@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include <asio.hpp>
-#include "../RSA.h"
 
 template<typename ConnectionHandler>
 class Server {

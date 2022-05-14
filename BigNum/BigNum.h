@@ -27,16 +27,16 @@ public:
 
     uint number;   // @todo make this private again eventually
 
-    BigNum() {
+    BigNum() { //wenn einfach nur BigNum erstellt
 
         this->number.negative = false;
         this->number.n.push_back(0);
     }
 
-    explicit BigNum(const char *s) {
+    explicit BigNum(const char *s) { //wenn spezifizierter Konstruktor
 
-        BigNum a;
-        a = s;
+        BigNum a; //temporär
+        a = s; //s ist so ziemlich n String, zeigt auf den Anfang von String
         *this = a;
     }
 
@@ -92,18 +92,18 @@ public:
 
     uint64_t length() {
 
-        BigNum a = *this;
+        BigNum a = *this; //this bezieht sich auf BigNum von dem das aufgerufen wird
 
-        a.fit();
+        a.fit(); //alle unnötigen 0en werden entfernt
         if (a.number.n.size() == 1 && a.number.n[0] == 0) return 0;
 
         uint64_t length = (a.number.n.size() - 1) * 64;
         uint64_t mask = 1;
         for (uint8_t i = 0; i < 64; ++i) {
 
-            if (a.number.n.back() < mask) break;
             length++;
-            mask <<= 1;
+            if (a.number.n.back() & mask) break; //Vergleich, ob der 1er Bit bei dem iterierten uint64 auf der selben Höhe ist, wie er erste von a
+            mask <<= 1; //mask wird 1 nach links geshifted
         }
 
         return length;
@@ -112,7 +112,6 @@ public:
     // @todo test for errors
     BigNum subBits(uint64_t start, uint64_t end) {
 
-        start = start < 0 ? 0 : start;
         end = end > length() ? length() : end;
 
 
@@ -120,7 +119,7 @@ public:
         uint64_t mask = UINT64_MAX;
         BigNum result, n = *this;
 
-        if (end - start <= 64) {
+        if (end - start <= 64) { //@todo Prüfen i guess
 
             mask = mask << (64 - (end - start));
             mask = mask >> (64 - end);
@@ -183,7 +182,7 @@ public:
 
     std::string toHexString() {
 
-        std::string hexChars = "0123456789ABCDEF";
+        std::string hexChars = "0123456789ABCDEF"; //std::string = ""; ist äquivalent zu String = "";
         std::string out;
 
         BigNum a = *this;
@@ -191,12 +190,12 @@ public:
         bool leadingZeros = true;
         for (uint64_t i = 0; i < this->number.n.size() * 16; ++i) {
 
-            uint64_t num = a.number.n.front() & 0xF;
+            uint64_t num = a.number.n.front() & 0xF; //ganz rechten 4 Bits
             a = a >> 4;
 
             if (num > 0) {
 
-                out += hexChars.at(num);
+                out += hexChars.at(num); //at(num); ist äquivalent zu .charAt(num);
                 leadingZeros = false;
             } else if (!leadingZeros) {
 
