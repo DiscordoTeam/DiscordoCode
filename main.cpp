@@ -3,9 +3,10 @@
 //
 
 #include <iostream>
-#include <asio.hpp>
+#include "BigNum/BigNum.h"
 
 int main() {
 
-    
+    BigNum n("0xBEEF");
+    n.length();
 }
