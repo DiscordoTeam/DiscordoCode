@@ -8,7 +8,6 @@
 #include <fstream>
 
 #include "../Networking/ClientHandler.h"
-#include "../RSA.h"
 #include "Message.h"
 
 #define CONFIG_PATH "config"
