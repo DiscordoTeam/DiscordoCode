@@ -6,6 +6,9 @@ link_libraries(ws2_32 wsock32)
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
 
-file(GLOB SOURCES "*.cpp" "*.h" "BigNum/*.cpp" "BigNum/*.h" "Networking/*.cpp" "Networking/*.h")
+file(GLOB GENERAL "General/*.cpp" "General/*.h" "General/BigNum/*.h" "General/Networking/*.h")
+file(GLOB CLIENT "Client/*.cpp" "Client/*.h")
+file(GLOB SERVER "Server/*.cpp" "Server/*.h")
 
-add_executable(DiscordoClient ${SOURCES})
+add_executable(DiscordoClient ${GENERAL} ${CLIENT})
+add_executable(DiscordoServer ${GENERAL} ${SERVER})

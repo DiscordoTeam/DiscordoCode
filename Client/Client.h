@@ -7,8 +7,8 @@
 #include <utility>
 #include <fstream>
 
-#include "../Networking/ClientHandler.h"
-#include "Message.h"
+#include "ClientHandler.h"
+#include "../General/Networking/Message.h"
 
 
 

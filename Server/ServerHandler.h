@@ -10,7 +10,7 @@
 #include <fstream>
 #include <thread>
 
-#include "Message.h"
+#include "../General/Networking/Message.h"
 
 class ServerHandler
         : public std::enable_shared_from_this<ServerHandler> {
