@@ -7,14 +7,15 @@
 #include <iostream>
 #include <vector>
 
+#include "../BigNum/BigNum.h"
+
 // @todo in order to make this into a usable kind of library, this needs to only be declared here and the user will need to initialise this in their own implementation
 /**
  * @brief For giving IDs to messages in order for them to be recognized in some sort of protocol
- * @note For security reasons, it is advised to transmit all except for the key exchange messages in encrypted form
  */
 enum MessageID {
 
-    ERR, PING, KEY_EXCHANGE_E, KEY_EXCHANGE_N, USERNAME, REGISTER_PASSWORD, LOGIN_PASSWORD, ADD_ENTRY_NAME, ADD_ENTRY_DATA
+
 };
 
 struct Message {
@@ -60,56 +61,6 @@ struct Message {
         data.insert(data.begin() + 9, body.begin(), body.end());
 
         return data;
-    }
-
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    /**
-     * @brief Encrypts a message bades on the number of blocks taht make up the message
-     * @param encryptionFunction<BigNum(BigNum)> the function that shall be used for encryption. RSA is recommended
-     */
-    void encrypt(const std::function<BigNum(BigNum)>& encryptionFunction) {
-
-        BigNum m, c;
-        *this >> m;
-
-        uint64_t blockSize = c.length() / this->header.blocks;
-
-        for (uint64_t i = 0; i < this->header.blocks; ++i) {
-
-            c = c | (encryptionFunction(m.subBits(0, blockSize)) << blockSize * i);
-
-            c = c << (blockSize * i);
-            m = m >> (blockSize * i);
-        }
-
-        *this << c;
-    }
-
-    /**
-     * @brief Decrypts a message based on the number of blocks that make up the message
-     * @param decryptionFunction<BigNum(BigNum)> function that shall be used for decryption. RSA is recommended
-     */
-    void decrypt(const std::function<BigNum(BigNum)>& decryptionFunction) {
-
-        BigNum c, m;
-        *this >> c;
-
-        uint64_t blockSize = c.length() / this->header.blocks;
-
-        for (uint64_t i = 0; i < this->header.blocks; ++i) {
-
-            m = m | (decryptionFunction(c.subBits(0, blockSize)) << blockSize * i);
-
-            m = m << (blockSize * i);
-            c = c >> (blockSize * i);
-        }
-
-        *this << m;
     }
 
 

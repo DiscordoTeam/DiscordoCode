@@ -10,13 +10,10 @@
 template<typename ConnectionHandler>
 class Server {
 
-    RSA rsa;
-
     uint32_t threadCount;
     std::vector<std::thread> threadPool;
     asio::io_service service;
     asio::ip::tcp::acceptor acceptor;
-
 
     void handleNewConnection(std::shared_ptr<ConnectionHandler> handler, asio::error_code const &error) {
 
@@ -26,7 +23,7 @@ class Server {
 
         handler->start();
 
-        std::shared_ptr<ConnectionHandler> newHandler = std::make_shared<ConnectionHandler>(this->service, rsa);
+        std::shared_ptr<ConnectionHandler> newHandler = std::make_shared<ConnectionHandler>(this->service);
 
         this->acceptor.async_accept(newHandler->socket(), [=](std::error_code ec) {
 
@@ -40,12 +37,11 @@ public:
     Server(uint32_t threadCount = 1)
             : threadCount(threadCount), acceptor(service) {
 
-        rsa.generateKeys();
     }
 
     void start(uint16_t port) {
 
-        std::shared_ptr<ConnectionHandler> handler = std::make_shared<ConnectionHandler>(this->service, rsa);
+        std::shared_ptr<ConnectionHandler> handler = std::make_shared<ConnectionHandler>(this->service);
 
         asio::ip::tcp::endpoint endpoint(asio::ip::tcp::v4(), port);
         this->acceptor.open(endpoint.protocol());
