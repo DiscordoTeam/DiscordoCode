@@ -6,7 +6,7 @@
 #define DISCORDOCODE_TEST_H
 
 
-class Test {
+class Random {
 
 };
 
