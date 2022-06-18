@@ -32,3 +32,17 @@ public:
 
     Authentication();
 };
+
+class TextHandler : public MessageHandler {
+
+    std::string input = "";
+
+    void onConnected() override;
+
+    void onMessageReceived(Message message) override;
+
+public:
+    [[nodiscard]] MessageHandler *clone() const override;
+
+    TextHandler();
+};

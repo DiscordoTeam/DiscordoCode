@@ -14,13 +14,7 @@ int main() {
     client.connectToIp(10, "127.0.0.1");
 
     client.addHandler(new Authentication);
-
-    uint8_t a = 10;
-    Message message;
-
-    message << a;
-
-    client.handler.queueMessage(message);
+    client.addHandler(new TextHandler);
 
     std::thread clientThread([&] { client.run(); });
 

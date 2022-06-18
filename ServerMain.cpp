@@ -13,6 +13,7 @@ int main() {
     Server server;
 
     server.addHandler(new Authentication);
+    server.addHandler(new TextHandler);
 
     server.start<ServerHandler>(10);
 
