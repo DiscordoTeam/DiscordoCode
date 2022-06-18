@@ -5,7 +5,7 @@
 #include "CONFIG.h"
 
 #include <Custom/Networking.h>
-#include "TestHandler.h"
+#include "Networking/Handlers.h"
 
 int main() {
 
@@ -13,7 +13,7 @@ int main() {
     Client client;
     client.connectToIp(10, "127.0.0.1");
 
-    client.addHandler(new TestHandler);
+    client.addHandler(new Authentication);
 
     uint8_t a = 10;
     Message message;

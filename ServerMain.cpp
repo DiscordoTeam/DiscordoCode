@@ -5,14 +5,14 @@
 #include "CONFIG.h"
 
 #include <Custom/Networking.h>
-#include "TestHandler.h"
+#include "Networking/Handlers.h"
 
 int main() {
 
     std::cout << "Waiting for connection..." << std::endl;
     Server server;
 
-    server.addHandler(new TestHandler);
+    server.addHandler(new Authentication);
 
     server.start<ServerHandler>(10);
 
