@@ -13,17 +13,16 @@ int main() {
     Client client;
     client.connectToIp(10, "127.0.0.1");
 
-    client.addHandler(new TestHandler());
+    client.addHandler(new TestHandler);
 
-    std::thread clientThread([&] { client.run(); });
-
+    uint8_t a = 10;
     Message message;
-    message.header.id = 13;
 
-    BigNum test("0xBEEF");
-    message << test;
+    message << a;
 
     client.handler.queueMessage(message);
+
+    std::thread clientThread([&] { client.run(); });
 
     for(;;);
 }

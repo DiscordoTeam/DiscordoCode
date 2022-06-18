@@ -9,12 +9,18 @@
 class TestHandler : public MessageHandler {
 
 
-    void onMessageReceived(Message message) {
+    void onMessageReceived(Message message) override {
 
         std::cout << "Message received" << std::endl;
     }
 
 public:
+
+    [[nodiscard]] MessageHandler* clone() const override {
+
+        return new TestHandler(*this);
+    }
+
     TestHandler() {
 
         startingId = 0;

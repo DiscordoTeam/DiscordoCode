@@ -12,7 +12,7 @@ int main() {
     std::cout << "Waiting for connection..." << std::endl;
     Server server;
 
-    server.addHandler(new TestHandler());
+    server.addHandler(new TestHandler);
 
     server.start<ServerHandler>(10);
 
