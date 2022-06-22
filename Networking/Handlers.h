@@ -9,7 +9,7 @@
 enum MessageIDs {
 
     NONE = 0,
-    ECC_POINT_X, ECC_POINT_Y
+    ECC_POINT_X, ECC_POINT_Y, TEXT_MESSAGE
 };
 
 class Authentication : public MessageHandler {
