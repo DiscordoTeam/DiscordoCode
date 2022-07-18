@@ -16,19 +16,34 @@ MessageHandler *TextHandler::clone() const {
 }
 
 void TextHandler::onConnected() {
-    for(;;) {
-        std::string input;
-        std::getline(std::cin, input);
 
-        BigNum n;
-        n.parseString(input);
+    if (clientHandler != nullptr) {
+        uint64_t fromID;
 
-        Message m;
-        m.header.id = TEXT_MESSAGE;
-        m << n;
+        std::cout << "Please enter the id you identify with" << std::endl;
+        std::cin >> fromID;
 
-        sendMessage(m);
+
+        for (;;) {
+
+            std::cout << "Enter target user id:" << std::endl;
+            uint64_t targetID;
+            std::cin >> targetID;
+
+            std::cout << "Enter message:" << std::endl;
+            std::string input;
+            std::getline(std::cin, input);
+
+            BigNum n;
+            n.parseString(input);
+
+
+            TextMessage m(fromID, targetID , n);
+
+            users.find(1)->second->queueMessage(m.buildMessage());
+        }
     }
+
 }
 
 void TextHandler::onMessageReceived(Message message) {

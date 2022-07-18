@@ -15,7 +15,7 @@ if(UNIX)
     link_libraries(Networking Cryptography BigNum)
 endif(UNIX)
 
-add_executable(DiscordoServer ServerMain.cpp Networking/Handlers/TextHandler.cpp)
-add_executable(DiscordoClient ClientMain.cpp Networking/Handlers/TextHandler.cpp)
+add_executable(DiscordoServer ServerMain.cpp Networking/Handlers/TextHandler.cpp Networking/CustomMessages.cpp)
+add_executable(DiscordoClient ClientMain.cpp Networking/Handlers/TextHandler.cpp Networking/CustomMessages.h Networking/CustomMessages.cpp)
 
 add_executable(Test ${SOURCES})
