@@ -4,19 +4,20 @@
 
 #pragma once
 
-#include <Custom/Networking.h>
+#include <Networking.h>
 
 enum MessageIDs {
 
     NONE = 0,
-    ECC_POINT_X, ECC_POINT_Y
+    ECC_POINT_X, ECC_POINT_Y,
+    TEXT_MESSAGE
 };
 
 class Authentication : public MessageHandler {
 
-    BigNum privateKey;
-    ECC::ECPoint privatePoint, B;
-    bool privatePointGenerated = false; // This is not needed until multiple threads can act on this instance
+    mutable BigNum privateKey;
+    mutable ECC::ECPoint privatePoint, B;
+    mutable bool privatePointGenerated = false; // This is not needed until multiple threads can act on this instance
 
     void onConnected() override;
 
@@ -27,7 +28,6 @@ class Authentication : public MessageHandler {
     void deriveSessionKey();
 
 public:
-
     [[nodiscard]] MessageHandler* clone() const override;
 
     Authentication();
@@ -42,7 +42,7 @@ class TextHandler : public MessageHandler {
     void onMessageReceived(Message message) override;
 
 public:
-    [[nodiscard]] MessageHandler *clone() const override;
+    [[nodiscard]] MessageHandler* clone() const override;
 
     TextHandler();
 };
