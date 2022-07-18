@@ -7,7 +7,7 @@
 
 TextHandler::TextHandler() {
 
-    startingId = TEXT_MESSAGE;
+    startingId = IDENTIFY;
     endingId = TEXT_MESSAGE;
 }
 
@@ -24,10 +24,10 @@ void TextHandler::onConnected() {
         std::cout << "Please enter the id you identify with" << std::endl;
         std::cin >> fromID;
 
-        Message m;
-        m.header.id = IDENTIFY;
-        m << fromID;
-        sendMessage(m);
+        Message mes;
+        mes.header.id = IDENTIFY;
+        mes << fromID;
+        sendMessage(mes);
 
         for (;;) {
 
@@ -62,7 +62,7 @@ void TextHandler::onMessageReceived(Message message) {
 
             uint64_t id;
             message >> id;
-            users.at(id) = this;
+            users.insert( { id, this } );
             break;
 
         case TEXT_MESSAGE:
@@ -73,8 +73,13 @@ void TextHandler::onMessageReceived(Message message) {
                 std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
                 std::cout << tm.content.toString() << std::endl;
             } else {
-
-                users.find(tm.targetID)->second->sendMessage(message);
+                std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
+                std::cout << "content:" << tm.content.toString() << std::endl;
+                if(users.find(tm.targetID) != users.end()){
+                    users.find(tm.targetID)->second->sendMessage(message);
+                }else{
+                    std::cout << "user non-existened" << std::endl;
+                }
             }
             break;
     }
