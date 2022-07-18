@@ -15,9 +15,11 @@ int main() {
     //client.addHandler(new Authentication);
     client.addHandler(new TextHandler);
 
-    client.connectToIp(10, "192.168.178.52");
+    client.connectToIp(10, "127.0.0.1");
 
     std::thread clientThread([&] { client.run(); });
 
     for(;;);
+
+    return 0;
 }

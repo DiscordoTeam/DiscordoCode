@@ -33,7 +33,7 @@ void TextHandler::onConnected() {
 
 void TextHandler::onMessageReceived(Message message) {
 
-    std::cout << "received message" << std::endl;
+    std::cout << "Message received" << std::endl;
     switch (message.header.id) {
 
         case TEXT_MESSAGE:

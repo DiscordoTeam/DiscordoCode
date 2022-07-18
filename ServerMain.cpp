@@ -18,7 +18,6 @@ int main() {
     server.start<ServerHandler>(10);
 
     for(;;);
+
     return 0;
-
-
 }
