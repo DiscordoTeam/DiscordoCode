@@ -3,6 +3,7 @@
 //
 
 #include "../Handlers.h"
+#include "../CustomMessages.h"
 
 TextHandler::TextHandler() {
 
@@ -38,25 +39,39 @@ void TextHandler::onConnected() {
             n.parseString(input);
 
 
+
             TextMessage m(fromID, targetID , n);
 
-            users.find(1)->second->queueMessage(m.buildMessage());
+            sendMessage(m.buildMessage());
         }
     }
-
 }
 
 void TextHandler::onMessageReceived(Message message) {
 
+
+
     std::cout << "Message received" << std::endl;
     switch (message.header.id) {
 
+        case IDENTIFY:
+
+            uint64_t id;
+            message >> id;
+            users.at(id) = this;
+            break;
+
         case TEXT_MESSAGE:
 
-            BigNum n;
-            message >> n;
+            TextMessage tm(message);
+            if (clientHandler != nullptr) {
 
-            std::cout << n.toString() << std::endl;
+                std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
+                std::cout << tm.content.toString() << std::endl;
+            } else {
+
+                users.find(tm.targetID)->second->sendMessage(message);
+            }
             break;
     }
 }

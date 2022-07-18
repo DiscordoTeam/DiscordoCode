@@ -5,12 +5,13 @@
 #pragma once
 
 #include <Networking.h>
+#include <map>
 
 enum MessageIDs {
 
     NONE = 0,
     ECC_POINT_X, ECC_POINT_Y,
-    TEXT_MESSAGE
+    IDENTIFY, TEXT_MESSAGE
 };
 
 class Authentication : public MessageHandler {
@@ -36,6 +37,8 @@ public:
 class TextHandler : public MessageHandler {
 
     std::string input = "";
+
+    std::map<uint64_t, MessageHandler*> users;
 
     void onConnected() override;
 
