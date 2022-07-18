@@ -17,7 +17,7 @@ MessageHandler *TextHandler::clone() const {
 
 void TextHandler::onConnected() {
 
-    //std::cin >> input;
+    std::cin >> input;
 
     BigNum n;
     n.parseString(input);
