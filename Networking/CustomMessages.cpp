@@ -6,18 +6,20 @@
 #include <utility>
 #include "Handlers.h"
 
-TextMessage::TextMessage(uint64_t fromID, uint64_t targetID, BigNum message) {
 
-    this->fromID = fromID;
-    this->targetID = targetID;
-    this->content = std::move(message);
-}
 
 TextMessage::TextMessage(Message message) {
 
     message >> fromID;
     message >> targetID;
     message >> content;
+}
+
+TextMessage::TextMessage(uint64_t fromID, uint64_t targetID, BigNum message) {
+
+    this->fromID = fromID;
+    this->targetID = targetID;
+    this->content = std::move(message);
 }
 
 Message TextMessage::buildMessage() {
