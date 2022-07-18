@@ -1,0 +1,5 @@
+C:/Users/jeuio/Desktop/Programmieren/C++/DiscordoCode/cmake-build-release/CMakeFiles/DiscordoServer.dir
+C:/Users/jeuio/Desktop/Programmieren/C++/DiscordoCode/cmake-build-release/CMakeFiles/DiscordoClient.dir
+C:/Users/jeuio/Desktop/Programmieren/C++/DiscordoCode/cmake-build-release/CMakeFiles/Test.dir
+C:/Users/jeuio/Desktop/Programmieren/C++/DiscordoCode/cmake-build-release/CMakeFiles/edit_cache.dir
+C:/Users/jeuio/Desktop/Programmieren/C++/DiscordoCode/cmake-build-release/CMakeFiles/rebuild_cache.dir
