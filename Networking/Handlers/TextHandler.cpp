@@ -16,22 +16,24 @@ MessageHandler *TextHandler::clone() const {
 }
 
 void TextHandler::onConnected() {
+    for(;;) {
+        std::string input;
+        std::getline(std::cin, input);
 
-    std::cin >> input;
+        BigNum n;
+        n.parseString(input);
 
-    BigNum n;
-    n.parseString(input);
+        Message m;
+        m.header.id = TEXT_MESSAGE;
+        m << n;
 
-    Message m;
-
-    m.header.id = TEXT_MESSAGE;
-    m << n;
-
-    sendEncryptedMessage(m);
+        sendMessage(m);
+    }
 }
 
 void TextHandler::onMessageReceived(Message message) {
 
+    std::cout << "received message" << std::endl;
     switch (message.header.id) {
 
         case TEXT_MESSAGE:
