@@ -24,6 +24,10 @@ void TextHandler::onConnected() {
         std::cout << "Please enter the id you identify with" << std::endl;
         std::cin >> fromID;
 
+        Message m;
+        m.header.id = IDENTIFY;
+        m << fromID;
+        sendMessage(m);
 
         for (;;) {
 
