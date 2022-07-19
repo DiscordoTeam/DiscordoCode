@@ -16,10 +16,7 @@ MessageHandler *Registration::clone() const {
     return new Registration(*this);
 }
 
-void Registration::onConnected() {
-
-
-}
+void Registration::onConnected() {}
 
 void Registration::onMessageReceived(Message message) {
 

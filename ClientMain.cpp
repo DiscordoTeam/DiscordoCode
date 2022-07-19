@@ -15,7 +15,7 @@ int main() {
     std::cout << "Connecting to server..." << std::endl;
     Client client;
 
-    //client.addHandler(new Authentication);
+    client.addHandler(new Registration);
     client.addHandler(new TextHandler);
 
     client.connectToDomain(JEUIO_PORT, "big.jeuio.net");

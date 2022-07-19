@@ -4,7 +4,7 @@
 
 #include "CONFIG.h"
 
-/*#include "Networking.h"
+#include "Networking.h"
 #include "Networking/Handlers.h"
 #include <fstream>
 
@@ -17,7 +17,7 @@ int main() {
     Server server;
 
     //server.addHandler(new Authentication);
-    server.addHandler(new TextHandler);
+
 
     server.start<ServerHandler>(38832);
 
@@ -25,4 +25,4 @@ int main() {
     for(;;);
 
     return 0;
-}*/
+}

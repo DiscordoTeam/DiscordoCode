@@ -24,8 +24,6 @@ class Registration : public MessageHandler {
 
     void onMessageReceived(Message message) override;
 
-    void searchOldUsers();
-
 public:
     [[nodiscard]] MessageHandler *clone() const override;
 
