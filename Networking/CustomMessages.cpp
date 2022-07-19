@@ -13,10 +13,9 @@ TextMessage::TextMessage(Message message) {
     message >> fromID;
     message >> targetID;
     message >> content;
-    std::cout << "";
 }
 
-TextMessage::TextMessage(uint64_t fromID, uint64_t targetID, BigNum message) {
+TextMessage::TextMessage(uint64_t fromID, uint64_t targetID, std::string message) {
 
     this->fromID = fromID;
     this->targetID = targetID;

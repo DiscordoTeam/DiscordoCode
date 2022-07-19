@@ -36,15 +36,20 @@ void TextHandler::onConnected() {
             std::cin >> targetID;
 
             std::cout << "Enter message:" << std::endl;
+
+            std::string messageString;
+
             std::cin.ignore();
-            std::getline(std::cin, input);
+            for(;;) {
+                std::getline(std::cin, input);
+                if (input.empty()) {
+                    break;
+                }
 
-            BigNum n;
-            n.parseString(input);
+                messageString += input + "\r\n";
+            }
 
-
-
-            TextMessage m(fromID, targetID , n);
+            TextMessage m(fromID, targetID , messageString);
 
             sendMessage(m.buildMessage());
         }
@@ -71,12 +76,12 @@ void TextHandler::onMessageReceived(Message message) {
             if (clientHandler != nullptr) {
 
                 std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
-                std::cout << tm.content.toString() << std::endl;
+                std::cout << tm.content << std::endl;
 
             } else {
                 std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
                 std::cout << "Target id: " << tm.targetID << std::endl;
-                std::cout << "Content:" << tm.content.toString() << std::endl;
+                std::cout << "Content:" << tm.content << std::endl;
                 if(users->find(tm.targetID) != users->end()){
 
                     users->find(tm.targetID)->second->sendMessage(message);

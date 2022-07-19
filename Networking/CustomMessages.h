@@ -11,11 +11,11 @@ struct TextMessage {
 
 
     uint64_t fromID, targetID;
-    BigNum content;
+    std::string content;
 
     explicit TextMessage(Message message);
 
-    TextMessage(uint64_t fromID, uint64_t targetID, BigNum message);
+    TextMessage(uint64_t fromID, uint64_t targetID, std::string message);
 
     Message buildMessage();
 };
