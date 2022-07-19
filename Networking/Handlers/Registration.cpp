@@ -102,10 +102,9 @@ void Registration::onMessageReceived(Message message) {
 
                     valid = true;
 
-                    std::cout << "This user already exists. They will be logged in to their account now!" << std::endl;
-
                     users->insert( {i, this } );
 
+                    logInMessage << true;
                     logInMessage << true;
                     logInMessage << i;
                     sendMessage(logInMessage);
@@ -149,6 +148,7 @@ void Registration::onMessageReceived(Message message) {
                 if (mail == json["email"] && password == json["password"]) {
 
                     valid = true;
+                    logInMessage << false;
                     logInMessage << true;
                     logInMessage << i;
                     users->insert( {i, this } );
@@ -174,12 +174,18 @@ void Registration::onMessageReceived(Message message) {
 
             uint64_t userID = 0;
             bool success = false;
+            bool cameFromRegister = false;
 
             message >> userID;
             message >> success;
+            message >> cameFromRegister;
 
             if(success) {
 
+                if(cameFromRegister) {
+
+                    std::cout << "This user already exists. You will be logged in to that account now!" << std::endl;
+                }
                 std::cout << "LogIn to User " << userID << " was successful!" << std::endl;
             } else {
 
