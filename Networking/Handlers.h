@@ -38,7 +38,7 @@ class TextHandler : public MessageHandler {
 
     std::string input = "";
 
-    std::map<uint64_t, MessageHandler*> users;
+    std::map<uint64_t, MessageHandler*>* users = new std::map<uint64_t, MessageHandler*>();     // @todo Care about deletion
 
     void onConnected() override;
 

@@ -21,7 +21,7 @@ void TextHandler::onConnected() {
     if (clientHandler != nullptr) {
         uint64_t fromID;
 
-        std::cout << "Please enter the id you identify with" << std::endl;
+        std::cout << "Please enter the id you identify with: ";
         std::cin >> fromID;
 
         Message mes;
@@ -31,12 +31,12 @@ void TextHandler::onConnected() {
 
         for (;;) {
 
-            std::cout << "Enter target user id:" << std::endl;
+            std::cout << "Enter target user id: ";
             uint64_t targetID;
             std::cin >> targetID;
 
             std::cout << "Enter message:" << std::endl;
-            std::string input;
+            std::cin.ignore();
             std::getline(std::cin, input);
 
             BigNum n;
@@ -62,7 +62,7 @@ void TextHandler::onMessageReceived(Message message) {
 
             uint64_t id;
             message >> id;
-            users.insert( { id, this } );
+            users->insert( { id, this } );
             break;
 
         case TEXT_MESSAGE:
@@ -72,13 +72,16 @@ void TextHandler::onMessageReceived(Message message) {
 
                 std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
                 std::cout << tm.content.toString() << std::endl;
+
             } else {
                 std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
-                std::cout << "content:" << tm.content.toString() << std::endl;
-                if(users.find(tm.targetID) != users.end()){
-                    users.find(tm.targetID)->second->sendMessage(message);
+                std::cout << "Target id: " << tm.targetID << std::endl;
+                std::cout << "Content:" << tm.content.toString() << std::endl;
+                if(users->find(tm.targetID) != users->end()){
+
+                    users->find(tm.targetID)->second->sendMessage(message);
                 }else{
-                    std::cout << "user non-existened" << std::endl;
+                    std::cout << "User non-existent" << std::endl;
                 }
             }
             break;
