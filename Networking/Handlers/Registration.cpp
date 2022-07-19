@@ -174,13 +174,14 @@ void Registration::onMessageReceived(Message message) {
         case LOG_IN_FINAL:
 
             uint64_t userID = 0;
+            bool success2;
             bool cameFromRegister = false;
 
             message >> userID;
-            message >> success;
+            message >> success2;
             message >> cameFromRegister;
 
-            if(success) {
+            if(success2) {
 
                 if(cameFromRegister) {
 
