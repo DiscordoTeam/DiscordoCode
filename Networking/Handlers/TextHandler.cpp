@@ -64,8 +64,6 @@ void TextHandler::onConnected() {}
 
 void TextHandler::onMessageReceived(Message message) {
 
-
-
     std::cout << "Message received" << std::endl;
     switch (message.header.id) {
 

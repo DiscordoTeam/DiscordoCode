@@ -91,7 +91,7 @@ void Registration::onMessageReceived(Message message) {
             inputStream >> iDInt;
             inputStream.close();
 
-            for (uint64_t i = 1; i < iDInt; ++i) {
+            for (uint64_t i = 1; i <= iDInt; ++i) {
 
                 std::ifstream fs(std::to_string(i));
                 nlohmann::json json;
@@ -104,6 +104,7 @@ void Registration::onMessageReceived(Message message) {
 
                     users->insert( {i, this } );
 
+                    logInMessage.header.id = LOG_IN_FINAL;
                     logInMessage << true;
                     logInMessage << true;
                     logInMessage << i;
