@@ -73,6 +73,7 @@ void Registration::onMessageReceived(Message message) {
 
     std::ifstream inputStream;
     bool success = false;
+    uint64_t iterator = 1;
 
     User user;
     Message logInMessage;
@@ -103,9 +104,12 @@ void Registration::onMessageReceived(Message message) {
             inputStream >> idInt;
             inputStream.close();
 
-            for (uint64_t i = 1; i < idInt; ++i) {
+            idInt++;
 
-                std::ifstream fs(std::to_string(i));
+            for (; iterator  < idInt;) {
+
+                iterator++;
+                std::ifstream fs(std::to_string(iterator));
                 nlohmann::json json;
                 fs >> json;
 
@@ -114,14 +118,14 @@ void Registration::onMessageReceived(Message message) {
                 if (mail == json["email"] && password == json["password"]) {
 
                     logInMessage << true;
-                    logInMessage << i;
+                    logInMessage << iterator;
                 } else {
 
                     logInMessage << false;
                     logInMessage << 0;
                 }
 
-                users->insert( { i, this } );
+                users->insert( { iterator, this } );
 
                 break;
             }
