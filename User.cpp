@@ -2,9 +2,25 @@
 // Created by pietb on 18.07.2022.
 //
 
+#include <fstream>
 #include "User.h"
 
 User user;
+
+void User::uinitialization(std::string a, std::string b, std::string c) {
+
+    std::string searcher;
+
+    std::fstream iDB("improvDataBase.txt");
+
+    for (int i = 0; i < iDB.gcount(); ++i) {
+
+
+    }
+
+    iDB << "User ";
+    iDB << idBackEnd;
+}
 
 void User::udelete() {
 

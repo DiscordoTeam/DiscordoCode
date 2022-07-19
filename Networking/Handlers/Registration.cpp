@@ -3,6 +3,7 @@
 //
 
 #include "../Handlers.h"
+#include "../../User.h"
 
 Registration::Registration() {
 
@@ -22,5 +23,10 @@ void Registration::onConnected() {
 
 void Registration::onMessageReceived(Message message) {
 
+    message >> name;
+    message >> mail;
+    message >> password;
 
+    User user;
+    user.uinitialization(name, mail, password);
 }

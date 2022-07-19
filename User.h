@@ -34,6 +34,7 @@ struct User {
    void udnd();
    void uinvisible();
    void udisconnect();
+   void uinitialization(std::string a, std::string b, std::string c);
 
     enum a {
 
