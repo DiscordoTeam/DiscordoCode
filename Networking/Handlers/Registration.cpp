@@ -77,7 +77,6 @@ void Registration::onMessageReceived(Message message) {
 
     User user;
     Message logInMessage;
-    Message existingUserMessage;
 
     switch(message.header.id) {
 
@@ -97,12 +96,11 @@ void Registration::onMessageReceived(Message message) {
                 std::ifstream fs(std::to_string(i));
                 nlohmann::json json;
                 fs >> json;
-
-                existingUserMessage.header.id = LOG_IN;
+                fs.close();
 
                 if (mail == json["email"] && password == json["password"]) {
 
-                    valid =true;
+                    valid = true;
 
                     std::cout << "This user already exists. They will be logged in to their account now!" << std::endl;
 
@@ -144,6 +142,7 @@ void Registration::onMessageReceived(Message message) {
                 std::ifstream fs(std::to_string(i));
                 nlohmann::json json;
                 fs >> json;
+                fs.close();
 
                 logInMessage.header.id = LOG_IN_FINAL;
 
