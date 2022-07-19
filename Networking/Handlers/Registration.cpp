@@ -20,6 +20,8 @@ void Registration::blockingOnConnected() {
 
     if (clientHandler != nullptr) {
 
+        std::cout << "Enter 'register' for creating a new account or 'login' to use an existing one" << std::endl;
+
         std::string command;
         std::cin >> command;
 
@@ -115,7 +117,7 @@ void Registration::onMessageReceived(Message message) {
             }
             if (!valid) {
 
-                user.uinitialization(name, mail, password);
+                users->insert( { user.uinitialization(name, mail, password) , this } );
             }
 
             name = "";

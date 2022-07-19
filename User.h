@@ -36,7 +36,7 @@ struct User {
    void udnd();
    void uinvisible();
    void udisconnect();
-   void uinitialization(std::string name, std::string email, std::string password);
+   uint64_t uinitialization(std::string name, std::string email, std::string password);
 
     enum a {
 

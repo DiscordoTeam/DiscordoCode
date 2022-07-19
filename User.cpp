@@ -7,7 +7,7 @@
 
 User user;
 
-void User::uinitialization(std::string name, std::string email, std::string password) {
+uint64_t User::uinitialization(std::string name, std::string email, std::string password) {
 
     std::fstream testFileStream("maxId");
     if (!testFileStream) {
@@ -15,7 +15,7 @@ void User::uinitialization(std::string name, std::string email, std::string pass
         testFileStream.close();
 
         std::ofstream createFileStream("maxId");
-        createFileStream << "0" << std::endl;
+        createFileStream << "0";
         createFileStream.flush();
         createFileStream.close();
     }
@@ -30,7 +30,7 @@ void User::uinitialization(std::string name, std::string email, std::string pass
     inputStream.close();
 
     std::ofstream outStream("maxId");
-    outStream << std::to_string(idBackEnd) << std::endl;
+    outStream << std::to_string(idBackEnd);
     outStream.flush();
     outStream.close();
 
@@ -42,6 +42,8 @@ void User::uinitialization(std::string name, std::string email, std::string pass
     of << std::setw(4) << json << std::endl;
     of.flush();
     of.close();
+
+    return idBackEnd;
 }
 
 void User::udelete() {
