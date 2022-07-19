@@ -5,11 +5,28 @@
 #pragma once
 
 #include "Networking.h"
+#include <string>
 
 enum MessageIDs {
 
     NONE = 0,
-    ECC_POINT_X, ECC_POINT_Y, TEXT_MESSAGE
+    ECC_POINT_X, ECC_POINT_Y, TEXT_MESSAGE, REGISTER, LOG_IN
+};
+
+class Registration : public MessageHandler {
+
+    std::string name;
+    std::string mail;
+    std::string password;
+
+    void onConnected() override;
+
+    void onMessageReceived(Message message) override;
+
+public:
+    [[nodiscard]] MessageHandler *clone() const override;
+
+    Registration();
 };
 
 class Authentication : public MessageHandler {
