@@ -9,22 +9,28 @@ User user;
 
 void User::uinitialization(std::string name, std::string email, std::string password) {
 
-    std::ofstream createFileStream("maxId");
-    if (!createFileStream.is_open()) {
+    std::fstream testFileStream("maxId");
+    if (!testFileStream) {
+
+        testFileStream.close();
+
+        std::ofstream createFileStream("maxId");
         createFileStream << "0" << std::endl;
         createFileStream.flush();
         createFileStream.close();
     }
+    testFileStream.close();
     
-    uint64_t idInt = 0;
+    std::string idInt;
 
-    std::fstream inputStream("maxId");
+    std::ifstream inputStream;
+    inputStream.open("maxId", std::fstream::in);
     inputStream >> idInt;
-    idBackEnd = idInt + 1;
+    idBackEnd = std::stoi(idInt) + 1;
     inputStream.close();
 
     std::ofstream outStream("maxId");
-    outStream << idBackEnd << std::endl;
+    outStream << std::to_string(idBackEnd) << std::endl;
     outStream.flush();
     outStream.close();
 

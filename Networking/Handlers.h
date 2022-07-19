@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Networking.h"
+#include <Networking.h>
 #include <string>
 #include <map>
 
@@ -22,7 +22,7 @@ class Registration : public MessageHandler {
     std::string mail;
     std::string password;
 
-    void blockingOnConnected();
+    void blockingOnConnected() override;
 
     void onConnected() override;
 
@@ -40,7 +40,7 @@ class Authentication : public MessageHandler {
     mutable ECC::ECPoint privatePoint, B;
     mutable bool privatePointGenerated = false; // This is not needed until multiple threads can act on this instance
 
-    void blockingOnConnected();
+    void blockingOnConnected() override;
 
     void onConnected() override;
 
@@ -63,7 +63,7 @@ class TextHandler : public MessageHandler {
 
     std::map<uint64_t, MessageHandler*>* users = new std::map<uint64_t, MessageHandler*>();     // @todo Care about deletion
 
-    void blockingOnConnected();
+    void blockingOnConnected() override;
 
     void onConnected() override;
 
