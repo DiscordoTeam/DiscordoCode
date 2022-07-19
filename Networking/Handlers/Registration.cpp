@@ -160,6 +160,7 @@ void Registration::onMessageReceived(Message message) {
 
                 uint64_t filler;
                 logInMessage << false;
+                logInMessage << false;
                 logInMessage << filler;
             }
 
@@ -173,7 +174,6 @@ void Registration::onMessageReceived(Message message) {
         case LOG_IN_FINAL:
 
             uint64_t userID = 0;
-            bool success = false;
             bool cameFromRegister = false;
 
             message >> userID;
