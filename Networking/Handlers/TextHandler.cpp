@@ -5,6 +5,8 @@
 #include "../Handlers.h"
 #include "../CustomMessages.h"
 
+std::map<uint64_t, MessageHandler*>* users = new std::map<uint64_t, MessageHandler*>();
+
 TextHandler::TextHandler() {
 
     startingId = IDENTIFY;
@@ -21,6 +23,7 @@ void TextHandler::blockingOnConnected() {
     if (clientHandler != nullptr) {
         uint64_t fromID;
 
+        /*
         std::cout << "Please enter the id you identify with: ";
         std::cin >> fromID;
 
@@ -28,6 +31,7 @@ void TextHandler::blockingOnConnected() {
         mes.header.id = IDENTIFY;
         mes << fromID;
         sendMessage(mes);
+         */
 
         for (;;) {
 

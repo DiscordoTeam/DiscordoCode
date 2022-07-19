@@ -13,10 +13,13 @@ enum MessageIDs {
     NONE = 0,
     ECC_POINT_X, ECC_POINT_Y,
     IDENTIFY, TEXT_MESSAGE,
-    REGISTER, LOG_IN
+    REGISTER, LOG_IN, LOG_IN_FINAL
 };
 
+extern std::map<uint64_t, MessageHandler*>* users;     // @todo Care about deletion
+
 class Registration : public MessageHandler {
+
 
     std::string name;
     std::string mail;
@@ -60,8 +63,6 @@ public:
 class TextHandler : public MessageHandler {
 
     std::string input = "";
-
-    std::map<uint64_t, MessageHandler*>* users = new std::map<uint64_t, MessageHandler*>();     // @todo Care about deletion
 
     void blockingOnConnected() override;
 

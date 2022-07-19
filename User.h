@@ -6,6 +6,7 @@
 #include <vector>
 #include <array>
 #include "json.hpp"
+#include <fstream>
 
 #pragma once
 
