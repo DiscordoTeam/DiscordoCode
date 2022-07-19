@@ -73,7 +73,8 @@ void Registration::onMessageReceived(Message message) {
 
     std::ifstream inputStream;
     bool success = false;
-    uint64_t iterator = 1;
+    uint64_t iterator2 = 1;
+    uint64_t iterator1 = 1;
 
     User user;
     Message logInMessage;
@@ -92,9 +93,10 @@ void Registration::onMessageReceived(Message message) {
             inputStream >> iDInt;
             inputStream.close();
 
-            for (uint64_t i = 1; i < iDInt; ++i) {
+            for (; iterator1 < iDInt;) {
 
-                std::ifstream fs(std::to_string(i));
+                iterator1++;
+                std::ifstream fs(std::to_string(iterator1));
                 nlohmann::json json;
                 fs >> json;
 
@@ -104,9 +106,12 @@ void Registration::onMessageReceived(Message message) {
 
                     std::cout << "This user already exists. You will be logged in to your account now!" << std::endl;
 
-                    existingUserMessage << mail;
-                    existingUserMessage << password;
-                    sendMessage(existingUserMessage);
+                    users->insert( { iterator2, this } );
+
+                    logInMessage << true;
+                    logInMessage << iterator1;
+                    sendMessage(logInMessage);
+
                 } else {
 
                     user.uinitialization(name, mail, password);
@@ -134,10 +139,10 @@ void Registration::onMessageReceived(Message message) {
 
             idInt++;
 
-            for (; iterator  < idInt;) {
+            for (; iterator2  < idInt;) {
 
-                iterator++;
-                std::ifstream fs(std::to_string(iterator));
+                iterator2++;
+                std::ifstream fs(std::to_string(iterator2));
                 nlohmann::json json;
                 fs >> json;
 
@@ -146,14 +151,14 @@ void Registration::onMessageReceived(Message message) {
                 if (mail == json["email"] && password == json["password"]) {
 
                     logInMessage << true;
-                    logInMessage << iterator;
+                    logInMessage << iterator2;
                 } else {
 
                     logInMessage << false;
                     logInMessage << 0;
                 }
 
-                users->insert( { iterator, this } );
+                users->insert( { iterator2, this } );
 
                 break;
             }
