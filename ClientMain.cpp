@@ -18,7 +18,7 @@ int main() {
     client.addHandler(new Registration);
     client.addHandler(new TextHandler);
 
-    client.connectToIp(38832, "127.0.0.1");
+    client.connectToDomain("38832", "big.jeuio.net");
 
     std::thread clientThread([&] { client.run(); });
 
