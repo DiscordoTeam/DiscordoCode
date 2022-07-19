@@ -6,11 +6,12 @@
 
 #include "Networking.h"
 #include <string>
+#include <map>
 
 enum MessageIDs {
 
     NONE = 0,
-    ECC_POINT_X, ECC_POINT_Y, TEXT_MESSAGE, REGISTER, LOG_IN
+    ECC_POINT_X, ECC_POINT_Y, IDENTIFY, TEXT_MESSAGE, REGISTER, LOG_IN
 };
 
 class Registration : public MessageHandler {
