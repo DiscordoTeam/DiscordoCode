@@ -33,9 +33,9 @@ public:
 
 class Authentication : public MessageHandler {
 
-    BigNum privateKey;
-    ECC::ECPoint privatePoint, B;
-    bool privatePointGenerated = false; // This is not needed until multiple threads can act on this instance
+    mutable BigNum privateKey;
+    mutable ECC::ECPoint privatePoint, B;
+    mutable bool privatePointGenerated = false; // This is not needed until multiple threads can act on this instance
 
     void onConnected() override;
 
@@ -56,12 +56,14 @@ class TextHandler : public MessageHandler {
 
     std::string input = "";
 
+    std::map<uint64_t, MessageHandler*>* users = new std::map<uint64_t, MessageHandler*>();     // @todo Care about deletion
+
     void onConnected() override;
 
     void onMessageReceived(Message message) override;
 
 public:
-    [[nodiscard]] MessageHandler *clone() const override;
+    [[nodiscard]] MessageHandler* clone() const override;
 
     TextHandler();
 };

@@ -9,13 +9,16 @@
 
 int main() {
 
-    std::cout << "Waiting for connection..." << std::endl;
+   std::cout << "Waiting for connection..." << std::endl;
     Server server;
 
-    server.addHandler(new Authentication);
+    //server.addHandler(new Authentication);
     server.addHandler(new TextHandler);
 
-    server.start<ServerHandler>(10);
+    server.start<ServerHandler>(38832);
 
     for(;;);
+
+    return 0;
+}
 }*/

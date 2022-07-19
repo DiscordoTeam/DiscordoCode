@@ -6,8 +6,8 @@
 
 Authentication::Authentication() {
 
-    startingId = NONE;
-    endingId = NONE;
+    startingId = ECC_POINT_X;
+    endingId = ECC_POINT_Y;
 }
 
 MessageHandler *Authentication::clone() const {
@@ -17,15 +17,19 @@ MessageHandler *Authentication::clone() const {
 
 void Authentication::onConnected() {
 
+    std::cout << "Starting key exchange" << std::endl;
     sendPrivatePoint();
 }
 
 void Authentication::onMessageReceived(Message message) {
 
+    // @fixme Problem with messages arriving simultaneously
+
     switch (message.header.id) {
 
         case ECC_POINT_X:
 
+            std::cout << "Received x" << std::endl;
             if (clientHandler != nullptr ? clientHandler->sessionKey.empty() : serverHandler->sessionKey.empty()) {
 
                 message >> B.infinity;
@@ -36,6 +40,7 @@ void Authentication::onMessageReceived(Message message) {
 
         case ECC_POINT_Y:
 
+            std::cout << "Received y" << std::endl;
             if (clientHandler != nullptr ? clientHandler->sessionKey.empty() : serverHandler->sessionKey.empty()) {
 
                 message >> B.y;
@@ -56,8 +61,13 @@ void Authentication::onMessageReceived(Message message) {
 
 void Authentication::sendPrivatePoint() {
 
+    std::cout << "Generating private coefficient... ";
     privateKey = ECC::DH::generatePrivateCoefficient();
+    std::cout << "done" << std::endl;
+    std::cout << "Calculating private point... ";
+    std::cout << "Test" << std::endl;
     privatePoint = ECC::DH::calculatePrivatePoint(privateKey);
+    std::cout << "done" << std::endl;
     privatePointGenerated = true;
 
     Message pointX, pointY;
@@ -70,8 +80,12 @@ void Authentication::sendPrivatePoint() {
     pointX.header.id = ECC_POINT_Y;
     pointY << privatePoint.y;
 
+    std::cout << "Sending x... ";
     sendMessage(pointX);
+    std::cout << "done" << std::endl;
+    std::cout << "Sending y... ";
     sendMessage(pointY);
+    std::cout << "done" << std::endl;
 }
 
 void Authentication::deriveSessionKey() {
