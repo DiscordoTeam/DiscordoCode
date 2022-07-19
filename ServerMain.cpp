@@ -16,6 +16,8 @@ int main() {
    std::cout << "Waiting for connection..." << std::endl;
     Server server;
 
+    server.addHandler(new Registration);
+    server.addHandler(new TextHandler);
     //server.addHandler(new Authentication);
 
 

@@ -16,7 +16,7 @@ MessageHandler *TextHandler::clone() const {
     return new TextHandler(*this);
 }
 
-void TextHandler::onConnected() {
+void TextHandler::blockingOnConnected() {
 
     if (clientHandler != nullptr) {
         uint64_t fromID;
@@ -40,7 +40,7 @@ void TextHandler::onConnected() {
             std::string messageString;
 
             std::cin.ignore();
-            for(;;) {
+            for (;;) {
                 std::getline(std::cin, input);
                 if (input.empty()) {
                     break;
@@ -49,12 +49,14 @@ void TextHandler::onConnected() {
                 messageString += input + "\r\n";
             }
 
-            TextMessage m(fromID, targetID , messageString);
+            TextMessage m(fromID, targetID, messageString);
 
             sendMessage(m.buildMessage());
         }
     }
 }
+
+void TextHandler::onConnected() {}
 
 void TextHandler::onMessageReceived(Message message) {
 

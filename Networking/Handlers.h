@@ -11,7 +11,9 @@
 enum MessageIDs {
 
     NONE = 0,
-    ECC_POINT_X, ECC_POINT_Y, IDENTIFY, TEXT_MESSAGE, REGISTER, LOG_IN
+    ECC_POINT_X, ECC_POINT_Y,
+    IDENTIFY, TEXT_MESSAGE,
+    REGISTER, LOG_IN
 };
 
 class Registration : public MessageHandler {
@@ -19,6 +21,8 @@ class Registration : public MessageHandler {
     std::string name;
     std::string mail;
     std::string password;
+
+    void blockingOnConnected();
 
     void onConnected() override;
 
@@ -35,6 +39,8 @@ class Authentication : public MessageHandler {
     mutable BigNum privateKey;
     mutable ECC::ECPoint privatePoint, B;
     mutable bool privatePointGenerated = false; // This is not needed until multiple threads can act on this instance
+
+    void blockingOnConnected();
 
     void onConnected() override;
 
@@ -56,6 +62,8 @@ class TextHandler : public MessageHandler {
     std::string input = "";
 
     std::map<uint64_t, MessageHandler*>* users = new std::map<uint64_t, MessageHandler*>();     // @todo Care about deletion
+
+    void blockingOnConnected();
 
     void onConnected() override;
 
