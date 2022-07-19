@@ -37,7 +37,7 @@ void TextHandler::onConnected() {
 
             std::cout << "Enter message:" << std::endl;
             std::string input;
-            std::getline(std::cin, input);
+            std::cin >> input;
 
             BigNum n;
             n.parseString(input);
