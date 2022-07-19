@@ -10,6 +10,6 @@ file(GLOB SOURCES CONFIGURE_DEPENDS "*.h" "*.cpp" "Networking/*.h" "Networking/*
 
 link_libraries(Networking Cryptography BigNum ws2_32 wsock32)
 add_executable(DiscordoServer ServerMain.cpp Networking/Handlers/Authentication.cpp Networking/Handlers/TextHandler.cpp CONFIG.h)
-add_executable(DiscordoClient ClientMain.cpp Networking/Handlers/Authentication.cpp Networking/Handlers/TextHandler.cpp CONFIG.h)
+add_executable(DiscordoClient ClientMain.cpp Networking/Handlers/Authentication.cpp Networking/Handlers/TextHandler.cpp User.cpp User.h CONFIG.h TextChannel.cpp TextChannel.h)
 
 add_executable(Test ${SOURCES})
