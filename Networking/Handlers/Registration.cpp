@@ -73,8 +73,7 @@ void Registration::onMessageReceived(Message message) {
 
     std::ifstream inputStream;
     bool success = false;
-    uint64_t iterator2 = 1;
-    uint64_t iterator1 = 1;
+    bool valid = false;
 
     User user;
     Message logInMessage;
@@ -93,10 +92,9 @@ void Registration::onMessageReceived(Message message) {
             inputStream >> iDInt;
             inputStream.close();
 
-            for (; iterator1 < iDInt;) {
+            for (uint64_t i = 1; i < iDInt; ++i) {
 
-                iterator1++;
-                std::ifstream fs(std::to_string(iterator1));
+                std::ifstream fs(std::to_string(i));
                 nlohmann::json json;
                 fs >> json;
 
@@ -104,20 +102,22 @@ void Registration::onMessageReceived(Message message) {
 
                 if (mail == json["email"] && password == json["password"]) {
 
-                    std::cout << "This user already exists. You will be logged in to your account now!" << std::endl;
+                    valid =true;
 
-                    users->insert( { iterator2, this } );
+                    std::cout << "This user already exists. They will be logged in to their account now!" << std::endl;
+
+                    users->insert( {i, this } );
 
                     logInMessage << true;
-                    logInMessage << iterator1;
+                    logInMessage << i;
                     sendMessage(logInMessage);
+                    break;
 
-                } else {
-
-                    user.uinitialization(name, mail, password);
                 }
+            }
+            if (!valid) {
 
-                break;
+                user.uinitialization(name, mail, password);
             }
 
             name = "";
@@ -139,10 +139,9 @@ void Registration::onMessageReceived(Message message) {
 
             idInt++;
 
-            for (; iterator2  < idInt;) {
+            for (uint64_t i = 1; i < idInt; ++i) {
 
-                iterator2++;
-                std::ifstream fs(std::to_string(iterator2));
+                std::ifstream fs(std::to_string(i));
                 nlohmann::json json;
                 fs >> json;
 
@@ -150,17 +149,19 @@ void Registration::onMessageReceived(Message message) {
 
                 if (mail == json["email"] && password == json["password"]) {
 
+                    valid = true;
                     logInMessage << true;
-                    logInMessage << iterator2;
-                } else {
-
-                    logInMessage << false;
-                    logInMessage << 0;
+                    logInMessage << i;
+                    users->insert( {i, this } );
+                    break;
                 }
+            }
 
-                users->insert( { iterator2, this } );
+            if (!valid) {
 
-                break;
+                uint64_t filler;
+                logInMessage << false;
+                logInMessage << filler;
             }
 
             mail = "";
