@@ -7,6 +7,20 @@
 
 User user;
 
+uint64_t User::uinitializationIntoFreeSpot(std::string name, std::string email, std::string password, uint64_t freeID) {
+
+    std::ofstream of(std::to_string(freeID));
+    nlohmann::json json;
+    json["username"] = name;
+    json["email"] = email;
+    json["password"] = password;
+    of << std::setw(4) << json << std::endl;
+    of.flush();
+    of.close();
+
+    return freeID;
+}
+
 uint64_t User::uinitialization(std::string name, std::string email, std::string password) {
 
     std::fstream testFileStream("maxId");
@@ -46,9 +60,16 @@ uint64_t User::uinitialization(std::string name, std::string email, std::string 
     return idBackEnd;
 }
 
-void User::udelete() {
+void User::udelete(uint64_t userID) {
 
-
+    std::ofstream udelete(std::to_string(userID));
+    nlohmann::json json;
+    json["username"] = "DELETED";
+    json["email"] = "DELETED";
+    json["password"] = "DELETED";
+    udelete << std::setw(4) << json << std::endl;
+    udelete.flush();
+    udelete.close();
 }
 
 void User::unoActivity() {

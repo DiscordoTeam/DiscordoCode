@@ -31,12 +31,13 @@ struct User {
    std::vector<uint32_t> friends;
    std::vector<uint32_t> groups;
 
-   void udelete();
+   void udelete(uint64_t userID);
    void unoActivity();
    void udnd();
    void uinvisible();
    void udisconnect();
    uint64_t uinitialization(std::string name, std::string email, std::string password);
+   uint64_t uinitializationIntoFreeSpot(std::string name, std::string email, std::string password, uint64_t freeID);
 
     enum a {
 
