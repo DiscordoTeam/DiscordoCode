@@ -16,7 +16,7 @@ enum MessageIDs {
     REGISTER, LOG_IN, LOG_IN_FINAL
 };
 
-extern std::map<uint64_t, MessageHandler*>* users;     // @todo Care about deletion
+extern std::map<uint64_t, MessageHandler*>* users;
 
 class Registration : public MessageHandler {
 

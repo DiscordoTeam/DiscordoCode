@@ -18,7 +18,7 @@ TextHandler::~TextHandler() throw() {
     std::cout << "Removing client reference... ";
     if (users->find(clientId) != users->end()) {
 
-        std::cout << "Client reverence removed" << std::endl;
+        std::cout << "Client reference removed" << std::endl;
         users->erase(clientId);
     }
 }

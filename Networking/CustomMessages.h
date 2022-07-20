@@ -8,8 +8,6 @@
 
 struct TextMessage {
 
-
-
     uint64_t fromID, targetID;
     std::string content;
 

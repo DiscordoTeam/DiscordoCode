@@ -6,12 +6,8 @@
 
 #include "Networking.h"
 #include "Networking/Handlers.h"
-#include <fstream>
 
 int main() {
-
-    std::fstream fs("Fiole");
-
 
    std::cout << "Waiting for connection..." << std::endl;
     Server server;
