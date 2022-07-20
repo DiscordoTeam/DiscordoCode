@@ -13,6 +13,16 @@ TextHandler::TextHandler() {
     endingId = TEXT_MESSAGE;
 }
 
+TextHandler::~TextHandler() throw() {
+
+    std::cout << "Removing client reference... ";
+    if (users->find(clientId) != users->end()) {
+
+        std::cout << "Client reverence removed" << std::endl;
+        users->erase(clientId);
+    }
+}
+
 MessageHandler *TextHandler::clone() const {
 
     return new TextHandler(*this);
@@ -21,7 +31,6 @@ MessageHandler *TextHandler::clone() const {
 void TextHandler::blockingOnConnected() {
 
     if (clientHandler != nullptr) {
-        uint64_t fromID;
 
         /*
         std::cout << "Please enter the id you identify with: ";
@@ -53,7 +62,7 @@ void TextHandler::blockingOnConnected() {
                 messageString += input + "\r\n";
             }
 
-            TextMessage m(fromID, targetID, messageString);
+            TextMessage m(clientId, targetID, messageString);
 
             sendMessage(m.buildMessage());
         }
@@ -69,9 +78,12 @@ void TextHandler::onMessageReceived(Message message) {
 
         case IDENTIFY:
 
-            uint64_t id;
-            message >> id;
-            users->insert( { id, this } );
+            if (serverHandler != nullptr) {
+
+                sendMessage(message);
+            }
+
+            message >> clientId;
             break;
 
         case TEXT_MESSAGE:
@@ -83,6 +95,7 @@ void TextHandler::onMessageReceived(Message message) {
                 std::cout << tm.content << std::endl;
 
             } else {
+
                 std::cout << "Received message from id " << tm.fromID << ":" << std::endl;
                 std::cout << "Target id: " << tm.targetID << std::endl;
                 std::cout << "Content:" << tm.content << std::endl;

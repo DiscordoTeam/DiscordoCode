@@ -62,6 +62,7 @@ public:
 
 class TextHandler : public MessageHandler {
 
+    uint64_t clientId;
     std::string input = "";
 
     void blockingOnConnected() override;
@@ -72,6 +73,8 @@ class TextHandler : public MessageHandler {
 
 public:
     [[nodiscard]] MessageHandler* clone() const override;
+
+    ~TextHandler() override;
 
     TextHandler();
 };

@@ -191,6 +191,11 @@ void Registration::onMessageReceived(Message message) {
                     std::cout << "This user already exists. You will be logged in to that account now!" << std::endl;
                 }
                 std::cout << "LogIn to User " << userID << " was successful!" << std::endl;
+
+                Message identifyMessage;
+                identifyMessage.header.id = IDENTIFY;
+                identifyMessage << userID;
+                sendMessage(identifyMessage);
             } else {
 
                 std::cout << "LogIn was unsuccessful. Check for typos and try again!" << std::endl;
