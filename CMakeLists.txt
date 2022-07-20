@@ -13,7 +13,7 @@ if(UNIX)
     link_libraries(Networking Cryptography BigNum)
 endif(UNIX)
 
-add_library(DiscordoClient Networking/Handlers/TextHAndler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp User.cpp)
+add_library(DiscordoClient Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp User.cpp)
 set_target_properties(DiscordoClient PROPERTIES PUBLIC_HEADER DiscordoClient.h)
 
 add_executable(Server ServerMain.cpp Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp User.cpp)
