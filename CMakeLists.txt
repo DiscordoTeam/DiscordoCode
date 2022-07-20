@@ -13,7 +13,14 @@ if(UNIX)
     link_libraries(Networking Cryptography BigNum)
 endif(UNIX)
 
-add_executable(DiscordoServer ServerMain.cpp Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp Networking/CustomMessages.h Networking/CustomMessages.cpp User.cpp)
-add_executable(DiscordoClient ClientMain.cpp Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp Networking/CustomMessages.h Networking/CustomMessages.cpp User.cpp)
+add_library(DiscordoClient Networking/Handlers/TextHAndler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp User.cpp)
+add_executable(Server ServerMain.cpp Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp Networking/CustomMessages.h User.cpp)
+add_executable(Client ClientMain.cpp Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp Networking/CustomMessages.h User.cpp)
 
-#add_executable(Test ${SOURCES})
+list(GET CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES 0 LIB_DIR)
+list(GET CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES 0 INC_DIR)
+
+message(STATUS "Include directory: ${INC_DIR}")
+message(STATUS "Library directory: ${LIB_DIR}")
+install(TARGETS DiscordoClient DESTINATION ${LIB_DIR}
+        PUBLIC_HEADER DESTINATION ${INC_DIR})
