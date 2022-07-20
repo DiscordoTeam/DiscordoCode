@@ -2,8 +2,7 @@
 // Created by pietb on 18.07.2022.
 //
 
-#include <fstream>
-#include "User.h"
+#include "DiscordoClient.h"
 
 User user;
 

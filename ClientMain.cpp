@@ -2,10 +2,7 @@
 // Created by jeuio on 14/05/2022.
 //
 
-#include "CONFIG.h"
-
-#include <Networking.h>
-#include "Networking/Handlers.h"
+#include "DiscordoClient.h"
 
 #define JEUIO_PORT "38832"
 #define JEREMY_PORT "38833"

@@ -2,7 +2,7 @@
 // Created by jeuio on 15/06/2022.
 //
 
-#include "../Handlers.h"
+#include "../../DiscordoClient.h"
 
 Authentication::Authentication() {
 

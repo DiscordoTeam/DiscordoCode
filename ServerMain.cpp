@@ -2,10 +2,7 @@
 // Created by jeuio on 15/05/2022.
 //
 
-#include "CONFIG.h"
-
-#include "Networking.h"
-#include "Networking/Handlers.h"
+#include "DiscordoClient.h"
 
 int main() {
 

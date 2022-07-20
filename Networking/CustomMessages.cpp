@@ -1,12 +1,8 @@
 //
 // Created by root on 18.07.22.
 //
-#include "CustomMessages.h"
 
-#include <utility>
-#include "Handlers.h"
-
-
+#include "../DiscordoClient.h"
 
 TextMessage::TextMessage(Message message) {
 

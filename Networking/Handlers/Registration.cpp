@@ -2,8 +2,7 @@
 // Created by pietb on 19.07.2022.
 //
 
-#include "../Handlers.h"
-#include "../../User.h"
+#include "../../DiscordoClient.h"
 
 Registration::Registration() {
 

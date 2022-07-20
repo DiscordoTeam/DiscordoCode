@@ -2,8 +2,7 @@
 // Created by pietb on 18.06.2022.
 //
 
-#include "../Handlers.h"
-#include "../CustomMessages.h"
+#include "../../DiscordoClient.h"
 
 std::map<uint64_t, MessageHandler*>* users = new std::map<uint64_t, MessageHandler*>();
 
