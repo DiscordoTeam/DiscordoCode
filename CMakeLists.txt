@@ -16,9 +16,6 @@ endif(UNIX)
 add_library(DiscordoClient Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp User.cpp)
 set_target_properties(DiscordoClient PROPERTIES PUBLIC_HEADER DiscordoClient.h)
 
-add_executable(Server ServerMain.cpp Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp User.cpp)
-add_executable(Client ClientMain.cpp Networking/Handlers/TextHandler.cpp Networking/Handlers/Registration.cpp Networking/CustomMessages.cpp User.cpp)
-
 list(GET CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES 0 LIB_DIR)
 list(GET CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES 0 INC_DIR)
 
