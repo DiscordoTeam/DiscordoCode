@@ -20,7 +20,7 @@ void Registration::blockingOnConnected() {
 
     if (clientHandler != nullptr) {
 
-        std::cout << "Enter 'register' for creating a new account or 'login' to use an existing one" << std::endl;
+        std::cout << "Enter 'register' for creating a new account, 'login' to use an existing one or 'delete' to wipe an existing one!" << std::endl;
 
         std::string command;
         std::cin >> command;
@@ -60,6 +60,27 @@ void Registration::blockingOnConnected() {
             message.header.id = LOG_IN;
             message << mail;
             message << password;
+            message << false;
+
+            mail = "";
+            password = "";
+
+            sendMessage(message);
+        } else if (command == "delete") {
+
+            std::cout << "To delete an account you have to verify your Identity first." << std::endl;
+
+            std::cout << "Please enter your EMail-Address: " << std::endl;
+            std::cin >> mail;
+
+            std::cout << "Please enter your Password: " << std::endl;
+            std::cin >> password;
+
+            Message message;
+            message.header.id = LOG_IN;
+            message << mail;
+            message << password;
+            message << true;
 
             mail = "";
             password = "";
@@ -76,6 +97,9 @@ void Registration::onMessageReceived(Message message) {
     std::ifstream inputStream;
     bool success = false;
     bool valid = false;
+    bool deletion = false;
+
+    uint64_t freeID = 0;
 
     User user;
     Message logInMessage;
@@ -100,6 +124,12 @@ void Registration::onMessageReceived(Message message) {
                 fs >> json;
                 fs.close();
 
+                if("DELETED" == json["email"] && "DELETED" == json["password"]) {
+
+                    freeID = i;
+                    break;
+                }
+
                 if (mail == json["email"] && password == json["password"]) {
 
                     valid = true;
@@ -112,12 +142,17 @@ void Registration::onMessageReceived(Message message) {
                     logInMessage << i;
                     sendMessage(logInMessage);
                     break;
-
                 }
             }
             if (!valid) {
 
-                users->insert( { user.uinitialization(name, mail, password) , this } );
+                if(freeID != 0) {
+
+                    users->insert({user.uinitializationIntoFreeSpot(name, mail, password, freeID), this});
+                } else {
+
+                    users->insert({user.uinitialization(name, mail, password), this});
+                }
             }
 
             name = "";
@@ -128,6 +163,7 @@ void Registration::onMessageReceived(Message message) {
 
         case LOG_IN:
 
+            message >> deletion;
             message >> password;
             message >> mail;
 
@@ -150,12 +186,18 @@ void Registration::onMessageReceived(Message message) {
 
                 if (mail == json["email"] && password == json["password"]) {
 
-                    valid = true;
-                    logInMessage << false;
-                    logInMessage << true;
-                    logInMessage << i;
-                    users->insert( {i, this } );
-                    break;
+                    if(!deletion) {
+                        valid = true;
+                        logInMessage << false;
+                        logInMessage << true;
+                        logInMessage << i;
+                        users->insert( {i, this } );
+                        break;
+                    } else {
+
+                        user.udelete(i);
+                        return;
+                    }
                 }
             }
 
