@@ -10,7 +10,7 @@ set(SOURCES
         DiscordoClient.cpp
         TextChannel.cpp
         User.cpp
-        Networking/ClientHandlerManager.cpp
+        DiscordoClient.cpp
         Networking/CustomMessages.cpp
         Networking/Handlers/Registration.cpp
         Networking/Handlers/TextHandler.cpp
