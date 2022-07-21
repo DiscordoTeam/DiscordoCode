@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
-#include "json.hpp"
+#include <json.hpp>
 #include <fstream>
 
 #pragma once
@@ -82,26 +82,9 @@ enum MessageIDs {
     REGISTER, LOG_IN, LOG_IN_FINAL
 };
 
-extern std::map<uint64_t, MessageHandler*>* users;
-
-class Registration : public MessageHandler {
 
 
-    std::string name;
-    std::string mail;
-    std::string password;
 
-    void blockingOnConnected() override;
-
-    void onConnected() override;
-
-    void onMessageReceived(Message message) override;
-
-public:
-    [[nodiscard]] MessageHandler *clone() const override;
-
-    Registration();
-};
 
 class Authentication : public MessageHandler {
 
@@ -124,11 +107,37 @@ public:
     [[nodiscard]] MessageHandler* clone() const override;
 
     Authentication();
+
+    inline Authentication(MessageHandler* hp) { *this = reinterpret_cast<Authentication &>(*hp); };
+};
+
+extern std::map<uint64_t, MessageHandler*>* users;
+class Registration : public MessageHandler {
+
+    void blockingOnConnected() override;
+
+    void onConnected() override;
+
+    void onMessageReceived(Message message) override;
+
+public:
+    [[nodiscard]] MessageHandler *clone() const override;
+
+    Registration();
+
+    inline Registration(MessageHandler* hp) { *this = reinterpret_cast<Registration &>(*hp); };
+
+    void registerUser(std::string username, std::string email, std::string password);
+
+    void logInUser(std::string email, std::string password);
+
+    void deleteUser(std::string email, std::string password);
 };
 
 class TextHandler : public MessageHandler {
 
     uint64_t clientId;
+    uint64_t clientIdServer;
     std::string input = "";
 
     void blockingOnConnected() override;
@@ -143,6 +152,10 @@ public:
     ~TextHandler() override;
 
     TextHandler();
+
+    inline TextHandler(MessageHandler* hp) { *this = reinterpret_cast<TextHandler &>(*hp); };
+
+    void sendTextMessage(uint64_t targetID, std::string message);
 };
 
 struct TextMessage {
@@ -155,4 +168,16 @@ struct TextMessage {
     TextMessage(uint64_t fromID, uint64_t targetID, std::string message);
 
     Message buildMessage();
+};
+
+
+
+
+
+struct DiscordoClient : public Client {
+
+    Registration registration;
+    TextHandler textHandler;
+
+    DiscordoClient();
 };

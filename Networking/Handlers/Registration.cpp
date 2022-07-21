@@ -10,6 +10,39 @@ Registration::Registration() {
     endingId = LOG_IN_FINAL;
 }
 
+void Registration::registerUser(std::string username, std::string email, std::string password) {
+
+    Message message;
+    message.header.id = REGISTER;
+    message << username;
+    message << email;
+    message << password;
+
+    sendMessage(message);
+}
+
+void Registration::logInUser(std::string email, std::string password) {
+
+    Message message;
+    message.header.id = LOG_IN;
+    message << email;
+    message << password;
+    message << false;
+
+    sendMessage(message);
+}
+
+void Registration::deleteUser(std::string email, std::string password) {
+
+    Message message;
+    message.header.id = LOG_IN;
+    message << email;
+    message << password;
+    message << true;
+
+    sendMessage(message);
+}
+
 MessageHandler *Registration::clone() const {
 
     return new Registration(*this);
@@ -17,6 +50,7 @@ MessageHandler *Registration::clone() const {
 
 void Registration::blockingOnConnected() {
 
+    /*
     if (clientHandler != nullptr) {
 
         std::cout << "Enter 'register' for creating a new account, 'login' to use an existing one or 'delete' to wipe an existing one!" << std::endl;
@@ -87,12 +121,14 @@ void Registration::blockingOnConnected() {
             sendMessage(message);
         }
     }
+     */
 }
 
 void Registration::onConnected() {}
 
 void Registration::onMessageReceived(Message message) {
 
+    std::string username, email, password;
     std::ifstream inputStream;
     bool success = false;
     bool valid = false;
@@ -106,9 +142,10 @@ void Registration::onMessageReceived(Message message) {
     switch(message.header.id) {
 
         case REGISTER:
+
             message >> password;
-            message >> mail;
-            message >> name;
+            message >> email;
+            message >> username;
 
             uint64_t iDInt;
 
@@ -129,7 +166,7 @@ void Registration::onMessageReceived(Message message) {
                     break;
                 }
 
-                if (mail == json["email"] && password == json["password"]) {
+                if (email == json["email"] && password == json["password"]) {
 
                     valid = true;
 
@@ -145,26 +182,21 @@ void Registration::onMessageReceived(Message message) {
             }
             if (!valid) {
 
-                if(freeID != 0) {
+                if (freeID != 0) {
 
-                    users->insert({user.uinitializationIntoFreeSpot(name, mail, password, freeID), this});
+                    users->insert({user.uinitializationIntoFreeSpot(username, email, password, freeID), this});
                 } else {
 
-                    users->insert({user.uinitialization(name, mail, password), this});
+                    users->insert({user.uinitialization(username, email, password), this});
                 }
             }
-
-            name = "";
-            mail = "";
-            password = "";
-
             break;
 
         case LOG_IN:
 
             message >> deletion;
             message >> password;
-            message >> mail;
+            message >> email;
 
             uint64_t idInt;
 
@@ -183,7 +215,7 @@ void Registration::onMessageReceived(Message message) {
 
                 logInMessage.header.id = LOG_IN_FINAL;
 
-                if (mail == json["email"] && password == json["password"]) {
+                if (email == json["email"] && password == json["password"]) {
 
                     if(!deletion) {
                         valid = true;
@@ -208,7 +240,7 @@ void Registration::onMessageReceived(Message message) {
                 logInMessage << filler;
             }
 
-            mail = "";
+            email = "";
             password = "";
 
             sendMessage(logInMessage);

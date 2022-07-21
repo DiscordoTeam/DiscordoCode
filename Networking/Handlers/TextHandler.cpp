@@ -14,12 +14,21 @@ TextHandler::TextHandler() {
 
 TextHandler::~TextHandler() throw() {
 
-    std::cout << "Removing client reference... ";
-    if (users->find(clientId) != users->end()) {
+    if (serverHandler != nullptr) {
 
-        std::cout << "Client reference removed" << std::endl;
-        users->erase(clientId);
+        std::cout << "Removing client reference... ";
+        if (users->find(clientIdServer) != users->end()) {
+
+            std::cout << "Client reference removed" << std::endl;
+            users->erase(clientIdServer);
+        }
     }
+}
+
+void TextHandler::sendTextMessage(uint64_t targetID, std::string textMessage) {
+
+    TextMessage m(clientId, targetID, textMessage);
+    sendMessage(m.buildMessage());
 }
 
 MessageHandler *TextHandler::clone() const {
@@ -29,9 +38,9 @@ MessageHandler *TextHandler::clone() const {
 
 void TextHandler::blockingOnConnected() {
 
+    /*
     if (clientHandler != nullptr) {
 
-        /*
         std::cout << "Please enter the id you identify with: ";
         std::cin >> fromID;
 
@@ -39,7 +48,6 @@ void TextHandler::blockingOnConnected() {
         mes.header.id = IDENTIFY;
         mes << fromID;
         sendMessage(mes);
-         */
 
         for (;;) {
 
@@ -66,6 +74,7 @@ void TextHandler::blockingOnConnected() {
             sendMessage(m.buildMessage());
         }
     }
+    */
 }
 
 void TextHandler::onConnected() {}
