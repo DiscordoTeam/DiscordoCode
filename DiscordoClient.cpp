@@ -4,10 +4,10 @@
 
 #include "DiscordoClient.h"
 
-DiscordoClient::DiscordoClient() {
+void DiscordoClient::initialise() {
 
     HandlerManager* hm = this->handler.getHandlerManager();
 
-    registration = hm->handlers[0];
-    textHandler = hm->handlers[1];
+    registration = dynamic_cast<Registration*>(hm->handlers[0]);
+    textHandler = dynamic_cast<TextHandler*>(hm->handlers[1]);
 }

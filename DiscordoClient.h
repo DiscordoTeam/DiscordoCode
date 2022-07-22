@@ -108,7 +108,7 @@ public:
 
     Authentication();
 
-    inline Authentication(MessageHandler* hp) { *this = reinterpret_cast<Authentication &>(*hp); };
+    inline Authentication(MessageHandler* hp) { *this = dynamic_cast<Authentication *>(hp); };
 };
 
 extern std::map<uint64_t, MessageHandler*>* users;
@@ -125,7 +125,7 @@ public:
 
     Registration();
 
-    inline Registration(MessageHandler* hp) { *this = reinterpret_cast<Registration &>(*hp); };
+    explicit inline Registration(MessageHandler* hp) { *this = *dynamic_cast<Registration *>(hp); };
 
     void registerUser(std::string username, std::string email, std::string password);
 
@@ -153,7 +153,7 @@ public:
 
     TextHandler();
 
-    inline TextHandler(MessageHandler* hp) { *this = reinterpret_cast<TextHandler &>(*hp); };
+    explicit inline TextHandler(MessageHandler* hp) { *this = *dynamic_cast<TextHandler *>(hp); };
 
     void sendTextMessage(uint64_t targetID, std::string message);
 };
@@ -176,8 +176,8 @@ struct TextMessage {
 
 struct DiscordoClient : public Client {
 
-    Registration registration;
-    TextHandler textHandler;
+    Registration* registration;
+    TextHandler* textHandler;
 
-    DiscordoClient();
+    void initialise();
 };
