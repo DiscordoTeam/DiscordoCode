@@ -11,13 +11,13 @@ int main() {
     Server server;
 
     HandlerManager hm;
-
     hm.addHandler(new Registration);
     hm.addHandler(new TextHandler);
 
-    server.setHandlerManager(hm);
+    server.setHandlerManager(&hm);
 
     server.start<ServerHandler>(38832);
 
     for(;;);
+    return 0;
 }

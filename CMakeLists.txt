@@ -23,10 +23,11 @@ if (UNIX)
     link_libraries(Networking Cryptography BigNum)
 endif (UNIX)
 
+add_executable(Server ServerMain.cpp ${SOURCES})
+
 add_library(DiscordoClient ${SOURCES})
 set_target_properties(DiscordoClient PROPERTIES PUBLIC_HEADER DiscordoClient.h)
 
-add_executable(Server ServerMain.cpp Networking/Handlers/Registration.cpp Networking/Handlers/TextHandler.cpp Networking/CustomMessages.cpp User.cpp)
 
 list(GET CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES 0 LIB_DIR)
 list(GET CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES 0 INC_DIR)
