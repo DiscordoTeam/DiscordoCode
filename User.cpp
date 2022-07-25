@@ -31,8 +31,10 @@ uint64_t User::uinitialization(std::string name, std::string email, std::string 
         createFileStream << "0";
         createFileStream.flush();
         createFileStream.close();
+    } else {
+
+        testFileStream.close();
     }
-    testFileStream.close();
     
     std::string idInt;
 

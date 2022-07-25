@@ -143,9 +143,14 @@ void Registration::onMessageReceived(Message message) {
 
         case REGISTER:
 
+            std::cout << "Performing registration" << std::endl;
+
             message >> password;
             message >> email;
             message >> username;
+            std::cout << "Username: " << username << std::endl;
+            std::cout << "Email: " << email << std::endl;
+            std::cout << "Password: " << password << std::endl;
 
             uint64_t iDInt;
 
@@ -168,6 +173,8 @@ void Registration::onMessageReceived(Message message) {
 
                 if (email == json["email"] && password == json["password"]) {
 
+                    std::cout << "User already exists. Logging them in..." << std::endl;
+
                     valid = true;
 
                     users->insert( {i, this } );
@@ -184,15 +191,19 @@ void Registration::onMessageReceived(Message message) {
 
                 if (freeID != 0) {
 
+                    std::cout << "Overwriting deleted user..." << std::endl;
                     users->insert({user.uinitializationIntoFreeSpot(username, email, password, freeID), this});
                 } else {
 
+                    std::cout << "Creating new user..." << std::endl;
                     users->insert({user.uinitialization(username, email, password), this});
                 }
             }
             break;
 
         case LOG_IN:
+
+            std::cout << "Performing log in" << std::endl;
 
             message >> deletion;
             message >> password;
@@ -217,7 +228,9 @@ void Registration::onMessageReceived(Message message) {
 
                 if (email == json["email"] && password == json["password"]) {
 
+                    std::cout << "Valid credentials provided" << std::endl;
                     if(!deletion) {
+                        std::cout << "Validating user" << std::endl;
                         valid = true;
                         logInMessage << false;
                         logInMessage << true;
@@ -226,6 +239,7 @@ void Registration::onMessageReceived(Message message) {
                         break;
                     } else {
 
+                        std::cout << "Deleting user" << std::endl;
                         user.udelete(i);
                         return;
                     }
